@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Whose Turn</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_money_input">Enter $</string>
+    <string name="button_add_1">Tomomi pays</string>
+    <string name="button_add_2">Joey pays</string>
+    <string name="whose_turn_state">"It's Tomomi's turn to pay!"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
