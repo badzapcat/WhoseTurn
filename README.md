@@ -1,4 +1,4 @@
-This is an app for keeping track of whose turn it is to pay for things between two close people. (for example, if you're eating out with your friend and it's most convenient for one person to pay.
+This is an app for keeping track of whose turn it is to pay for things between two close people. (for example, if you're eating out with your friend and it's most convenient for one person to pay than to split.)
 
 This is for people who don't want to deal with actual exchanges of money, and
 just want to take turns paying for things in a fair manner. It's also for people
@@ -9,9 +9,13 @@ This app is currently a work-in-progress, as it only runs locally on one phone.
 The imagined future of this app is to sync between a pair of phones using NFC.
 No guarantees it will ever become that, though.
 
+Also, it's currently hardcoded just for my girlfriend and I. The imagined future
+of this app is to be able to create and choose pairings of people. Again, no
+guarantees that will ever happen.
+
 TODO
 ====
-- Colors and icon
-- Fix edit text during rotation
-- Testing
-- NFC
+- Personalize colors, create an icon
+- Fix the screen when editing text during rotation
+- Add support for NFC sync
+- Add support for multiple pairings
