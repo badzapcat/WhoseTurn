@@ -12,5 +12,6 @@ No guarantees it will ever become that, though.
 TODO
 ====
 - Colors and icon
-- Code health
+- Fix edit text during rotation
+- Testing
 - NFC

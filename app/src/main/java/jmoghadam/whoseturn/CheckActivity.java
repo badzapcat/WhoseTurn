@@ -15,6 +15,10 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
+/**
+ * The main activity of the app. In this activity you can view whose turn it is to pay, have one
+ * person make a payment, and check the total debt owed.
+ */
 public class CheckActivity extends AppCompatActivity implements AddMoneyFragment.OnFragmentInteractionListener {
 
     private static final String INPUT_ERROR_MESSAGE = "Please enter a number amount.";
@@ -22,6 +26,8 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
     private static final String WHOSE_TURN_MESSAGE = "It's %s's turn to pay!";
     private static final String CONFIRM_MESSAGE = "%s paid $%s";
     private static final String TOTAL_AMOUNT_MESSAGE = "%s owes %s $%s";
+    public static final String PARTNER_1 = "Tomomi";
+    public static final String PARTNER_2 = "Joey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,11 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         return true;
     }
 
+    /**
+     * Initiate callbacks for pressing different action items.
+     * @param item The item that was pressed.
+     * @return true if item is processed here.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -50,6 +61,9 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Pop a toast displaying the current debt.
+     */
     private void toastCurrentAmount() {
         float amount = getPreferences(Context.MODE_PRIVATE).getFloat(AMOUNT_1_OWES_2, 0);
         if (amount >= 0) {
@@ -65,9 +79,14 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
+        // Unused
     }
 
+    /**
+     * Callback for when a payment button is pressed. Validates the entered information, then
+     * initiates logic for the payment.
+     * @param view The button that was pressed.
+     */
     public void addMoney(View view) {
         String enteredAmount = "";
         EditText editText = (EditText) findViewById(R.id.add_money_input);
@@ -90,6 +109,12 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         }
     }
 
+    /**
+     * Handle all logic once a payment occurs. Update the current debt,
+     * pop a toast indicating success, and update the message deciding whose turn is next.
+     * @param partnerNumber The partner making a payment.
+     * @param moneyAmount The amount by which the partner is paying.
+     */
     private void handlePayment(int partnerNumber, String moneyAmount) {
         float amount = Float.parseFloat(moneyAmount);
         savePayment(partnerNumber, amount);
@@ -98,12 +123,20 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         displayWhoseTurn();
     }
 
+    /**
+     * Display on the screen whose should pay next given current debts.
+     */
     private void displayWhoseTurn() {
         TextView whoseTurnText = (TextView) findViewById(R.id.whose_turn_state);
         whoseTurnText.setText(String.format(WHOSE_TURN_MESSAGE,
                 whoseTurnToPay()));
     }
 
+    /**
+     * Commit a payment by a partner, which updates the current debt.
+     * @param partnerNumber The number of the partner making the payment.
+     * @param amount The amount by which the partner is paying.
+     */
     private void savePayment(int partnerNumber, float amount) {
         SharedPreferences checkActivityPreferences = getPreferences(Context.MODE_PRIVATE);
         float amount1Owes2 = checkActivityPreferences.getFloat(AMOUNT_1_OWES_2, 0);
@@ -117,19 +150,22 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         editor.commit();
     }
 
+    /**
+     * @param partnerNumber A number either 1 or 2 specifying which partner.
+     * @return The name of the partner corresponding to partnerNumber.
+     */
     private String getPartnerName(int partnerNumber) {
         if (partnerNumber == 1) {
-            return "Tomomi";
+            return PARTNER_1;
         } else if (partnerNumber == 2) {
-            return "Joey";
+            return PARTNER_2;
         } else {
-            return "Nico (?!)";
+            throw new IllegalArgumentException("Partner " + partnerNumber + " does not exist.");
         }
     }
 
     /**
-     *
-     * @return The name of the person who should pay.
+     * @return The name of the partner who should pay given current debts. In a tie, partner 2 pays.
      */
     private String whoseTurnToPay() {
         SharedPreferences checkActivityPreferences = getPreferences(Context.MODE_PRIVATE);

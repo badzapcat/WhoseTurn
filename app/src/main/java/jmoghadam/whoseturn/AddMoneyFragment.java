@@ -9,12 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AddMoneyFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AddMoneyFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A fragment that contains a UI for entering a payment. Most of the code here is just skeleton
+ * code added by Android Studio, because the fragment doesn't need a lot of logic.
  */
 public class AddMoneyFragment extends Fragment {
 
