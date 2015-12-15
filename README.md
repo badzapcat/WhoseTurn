@@ -1,4 +1,4 @@
-This is an app for keeping track of whose turn it is to pay for things between two close people. (for example, if you're eating out with your friend and it's most convenient for one person to pay than to split.)
+This is an app for keeping track of whose turn it is to pay for things between two close people. (for example, if you're eating out with your friend and it's more convenient for one person to pay than to split.)
 
 This is for people who don't want to deal with actual exchanges of money, and
 just want to take turns paying for things in a fair manner. It's also for people
