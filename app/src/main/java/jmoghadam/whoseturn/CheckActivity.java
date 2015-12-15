@@ -34,19 +34,14 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_check, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_total_amount) {
             toastCurrentAmount();
             return true;
@@ -82,6 +77,7 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
             float amount = Float.parseFloat(enteredAmount);
             DecimalFormat moneyFormat = new DecimalFormat("#.00");
             String stringAmount = moneyFormat.format(amount);
+            editText.getText().clear();
             if (view.getId() == R.id.button_add_1) {
                 handlePayment(1, stringAmount);
             } else if (view.getId() == R.id.button_add_2) {
@@ -131,6 +127,10 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         }
     }
 
+    /**
+     *
+     * @return The name of the person who should pay.
+     */
     private String whoseTurnToPay() {
         SharedPreferences checkActivityPreferences = getPreferences(Context.MODE_PRIVATE);
         float amount1Owes2 = checkActivityPreferences.getFloat(AMOUNT_1_OWES_2, 0);

@@ -8,3 +8,9 @@ much_ is owed, just who ought to pay next.
 This app is currently a work-in-progress, as it only runs locally on one phone.
 The imagined future of this app is to sync between a pair of phones using NFC.
 No guarantees it will ever become that, though.
+
+TODO
+====
+- Colors and icon
+- Code health
+- NFC
