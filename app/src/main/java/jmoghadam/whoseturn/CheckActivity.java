@@ -26,8 +26,9 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
     private static final String WHOSE_TURN_MESSAGE = "It's %s's turn to pay!";
     private static final String CONFIRM_MESSAGE = "%s paid $%s";
     private static final String TOTAL_AMOUNT_MESSAGE = "%s owes %s $%s";
-    public static final String PARTNER_1 = "Tomomi";
-    public static final String PARTNER_2 = "Joey";
+    private static final String PARTNER_1 = "Tomomi";
+    private static final String PARTNER_2 = "Joey";
+    private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +69,11 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         float amount = getPreferences(Context.MODE_PRIVATE).getFloat(AMOUNT_1_OWES_2, 0);
         if (amount >= 0) {
             Toast.makeText(this, String.format(TOTAL_AMOUNT_MESSAGE, getPartnerName(1),
-                            getPartnerName(2), Float.toString(amount)),
+                            getPartnerName(2), MONEY_FORMAT.format(amount)),
                     Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, String.format(TOTAL_AMOUNT_MESSAGE, getPartnerName(2),
-                            getPartnerName(1), Float.toString(Math.abs(amount))),
+                            getPartnerName(1), MONEY_FORMAT.format(Math.abs(amount))),
                     Toast.LENGTH_LONG).show();
         }
     }
@@ -94,8 +95,7 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
 
         try {
             float amount = Float.parseFloat(enteredAmount);
-            DecimalFormat moneyFormat = new DecimalFormat("#.00");
-            String stringAmount = moneyFormat.format(amount);
+            String stringAmount = MONEY_FORMAT.format(amount);
             editText.getText().clear();
             if (view.getId() == R.id.button_add_1) {
                 handlePayment(1, stringAmount);
@@ -145,7 +145,6 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         } else if (partnerNumber == 2) {
             amount1Owes2 += amount;
         }
-        amount1Owes2 = Math.round(amount1Owes2 * 100 / 100);
         SharedPreferences.Editor editor = checkActivityPreferences.edit();
         editor.putFloat(AMOUNT_1_OWES_2, amount1Owes2);
         editor.commit();
