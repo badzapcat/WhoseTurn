@@ -15,7 +15,7 @@ guarantees that will ever happen.
 
 TODO
 ====
-- Personalize colors, create an icon
+- Create an icon
 - Fix the screen when editing text during rotation
 - Add support for NFC sync
 - Add support for multiple pairings
