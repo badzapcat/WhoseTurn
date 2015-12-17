@@ -145,6 +145,7 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         } else if (partnerNumber == 2) {
             amount1Owes2 += amount;
         }
+        amount1Owes2 = Math.round(amount1Owes2 * 100 / 100);
         SharedPreferences.Editor editor = checkActivityPreferences.edit();
         editor.putFloat(AMOUNT_1_OWES_2, amount1Owes2);
         editor.commit();
