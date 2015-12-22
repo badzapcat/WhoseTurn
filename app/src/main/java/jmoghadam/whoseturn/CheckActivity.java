@@ -1,6 +1,7 @@
 package jmoghadam.whoseturn;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,6 +58,9 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         if (id == R.id.action_total_amount) {
             toastCurrentAmount();
             return true;
+        } else if (id == R.id.action_knee_slaps) {
+            Intent intent = new Intent(this, KneeActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
