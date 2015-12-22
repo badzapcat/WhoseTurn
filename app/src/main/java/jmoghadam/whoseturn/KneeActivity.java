@@ -20,7 +20,7 @@ import java.util.Random;
  * The main activity of the app. In this activity you can view whose turn it is to pay, have one
  * person make a payment, and check the total debt owed.
  */
-public class KneeActivity extends AppCompatActivity {
+public class KneeActivity extends AppCompatActivity implements ChangeKneeSlapFragment.OnFragmentInteractionListener{
 
     private static final String AMOUNT_KNEE_SLAPS = "amountKneeSlaps";
     private static final String SINGULAR_KNEE_SLAP_MESSAGE = "%s owes %s 1 knee slap!";
@@ -36,8 +36,6 @@ public class KneeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knee);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         displayKneeSlaps();
     }
 
@@ -48,6 +46,7 @@ public class KneeActivity extends AppCompatActivity {
     public void addKneeSlap(View view) {
         changeKneeSlaps(1);
         Toast.makeText(this, String.format(ADD_MESSAGE, PARTNER_1), Toast.LENGTH_SHORT).show();
+        displayKneeSlaps();
     }
 
 
@@ -59,6 +58,7 @@ public class KneeActivity extends AppCompatActivity {
         changeKneeSlaps(-1);
         String useMessage = USE_MESSAGES[new Random().nextInt(USE_MESSAGES.length)];
         Toast.makeText(this, useMessage, Toast.LENGTH_SHORT).show();
+        displayKneeSlaps();
     }
 
     /**
@@ -84,7 +84,7 @@ public class KneeActivity extends AppCompatActivity {
         SharedPreferences checkActivityPreferences = getPreferences(Context.MODE_PRIVATE);
         int amountKneeSlaps = checkActivityPreferences.getInt(AMOUNT_KNEE_SLAPS, 0);
         SharedPreferences.Editor editor = checkActivityPreferences.edit();
-        editor.putFloat(AMOUNT_KNEE_SLAPS, amountKneeSlaps + 1);
+        editor.putInt(AMOUNT_KNEE_SLAPS, amountKneeSlaps + amount);
         editor.commit();
     }
 
@@ -94,5 +94,10 @@ public class KneeActivity extends AppCompatActivity {
     private int owedSlaps() {
         SharedPreferences checkActivityPreferences = getPreferences(Context.MODE_PRIVATE);
         return checkActivityPreferences.getInt(AMOUNT_KNEE_SLAPS, 0);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        // Not implemented
     }
 }

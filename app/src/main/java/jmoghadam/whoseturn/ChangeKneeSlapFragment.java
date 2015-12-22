@@ -43,7 +43,7 @@ public class ChangeKneeSlapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_money, container, false);
+        return inflater.inflate(R.layout.fragment_change_knee_slap, container, false);
     }
 
     public void onButtonPressed(Uri uri) {
