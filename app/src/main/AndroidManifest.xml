@@ -22,9 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".KneeActivity"
-                  android:label="@string/knee_activity_name"
-                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".KneeActivity"
+            android:label="@string/knee_activity_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SyncActivity"
+            android:label="@string/sync_activity_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

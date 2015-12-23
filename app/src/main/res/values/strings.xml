@@ -11,4 +11,8 @@
     <string name="button_use_knee_slap">Joey slapped that knee</string>
     <string name="check_activity_name">Whose Turn</string>
     <string name="knee_activity_name">Knee Slaps</string>
+    <string name="sync_activity_name">Sync</string>
+    <string name="sync_later">Sync later</string>
+    <string name="sync_info">Tap your phone to sync!</string>
+    <string name="action_sync">Sync</string>
 </resources>

@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="jmoghadam.whoseturn.CheckActivity">
     <item
+        android:id="@+id/action_sync"
+        android:title="@string/action_sync"
+        android:icon="@drawable/ic_sync_white_24dp"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_knee_slaps"
         android:title="@string/action_check_knee_slaps"
         android:icon="@drawable/ic_airline_seat_legroom_reduced_white_24dp"
