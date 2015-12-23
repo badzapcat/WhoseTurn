@@ -1,6 +1,7 @@
 package jmoghadam.whoseturn;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import java.util.Random;
  * The main activity of the app. In this activity you can view whose turn it is to pay, have one
  * person make a payment, and check the total debt owed.
  */
-public class KneeActivity extends AppCompatActivity implements ChangeKneeSlapFragment.OnFragmentInteractionListener{
+public class KneeActivity extends AppCompatActivity implements ChangeKneeSlapFragment.OnFragmentInteractionListener {
 
     private static final String AMOUNT_KNEE_SLAPS = "amountKneeSlaps";
     private static final String SINGULAR_KNEE_SLAP_MESSAGE = "%s owes %s 1 knee slap!";
@@ -29,6 +30,7 @@ public class KneeActivity extends AppCompatActivity implements ChangeKneeSlapFra
     private static final String ADD_MESSAGE = "Good job %s!";
     private static final String[] USE_MESSAGES = {"Such style!", "Such grace!", "Such pizzazz!",
             "Such gusto!"};
+    private static final String FAIL_MESSAGE = "How kind!";
     private static final String PARTNER_1 = "Tomomi";
     private static final String PARTNER_2 = "Joey";
 
@@ -36,11 +38,38 @@ public class KneeActivity extends AppCompatActivity implements ChangeKneeSlapFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knee);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.knee_toolbar);
+        setSupportActionBar(toolbar);
         displayKneeSlaps();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_knee, menu);
+        return true;
+    }
+
+    /**
+     * Initiate callbacks for pressing different action items.
+     *
+     * @param item The item that was pressed.
+     * @return true if item is processed here.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_whose_turn) {
+            Intent intent = new Intent(this, CheckActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
      * Callback for when add knee slap button is pressed.
+     *
      * @param view The button that was pressed.
      */
     public void addKneeSlap(View view) {
@@ -52,13 +81,18 @@ public class KneeActivity extends AppCompatActivity implements ChangeKneeSlapFra
 
     /**
      * Callback for when use knee slap button is pressed.
+     *
      * @param view The button that was pressed.
      */
     public void useKneeSlap(View view) {
-        changeKneeSlaps(-1);
-        String useMessage = USE_MESSAGES[new Random().nextInt(USE_MESSAGES.length)];
-        Toast.makeText(this, useMessage, Toast.LENGTH_SHORT).show();
-        displayKneeSlaps();
+        boolean successfullyChangedKneeSlaps = changeKneeSlaps(-1);
+        if (successfullyChangedKneeSlaps) {
+            String useMessage = USE_MESSAGES[new Random().nextInt(USE_MESSAGES.length)];
+            Toast.makeText(this, useMessage, Toast.LENGTH_SHORT).show();
+            displayKneeSlaps();
+        } else {
+            Toast.makeText(this, FAIL_MESSAGE, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -67,7 +101,7 @@ public class KneeActivity extends AppCompatActivity implements ChangeKneeSlapFra
     private void displayKneeSlaps() {
         TextView kneeSlaps = (TextView) findViewById(R.id.knee_slap_state);
         int owedSlaps = owedSlaps();
-        if (owedSlaps == 1){
+        if (owedSlaps == 1) {
             kneeSlaps.setText(String.format(SINGULAR_KNEE_SLAP_MESSAGE, PARTNER_2, PARTNER_1));
         } else {
             kneeSlaps.setText(String.format(PLURAL_KNEE_SLAP_MESSAGE, PARTNER_2, PARTNER_1,
@@ -76,16 +110,24 @@ public class KneeActivity extends AppCompatActivity implements ChangeKneeSlapFra
     }
 
     /**
-     * Commit a change in knee slaps.
+     * Commit a change in knee slaps. Knee slaps cannot become negative.
+     *
      * @param amount The amount to change by. Positive for owing more knee slaps, negative for owing
      *               fewer.
+     * @return Whether knee slaps were successfully changed (fails if would be negative)
      */
-    private void changeKneeSlaps(int amount) {
+    private boolean changeKneeSlaps(int amount) {
         SharedPreferences checkActivityPreferences = getPreferences(Context.MODE_PRIVATE);
         int amountKneeSlaps = checkActivityPreferences.getInt(AMOUNT_KNEE_SLAPS, 0);
         SharedPreferences.Editor editor = checkActivityPreferences.edit();
-        editor.putInt(AMOUNT_KNEE_SLAPS, amountKneeSlaps + amount);
-        editor.commit();
+        int changedAmount = amountKneeSlaps + amount;
+        if (changedAmount < 0) {
+            return false;
+        } else {
+            editor.putInt(AMOUNT_KNEE_SLAPS, amountKneeSlaps + amount);
+            editor.commit();
+            return true;
+        }
     }
 
     /**

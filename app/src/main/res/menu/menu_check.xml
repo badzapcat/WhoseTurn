@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="jmoghadam.whoseturn.CheckActivity">
     <item
+        android:id="@+id/action_knee_slaps"
+        android:title="@string/action_check_knee_slaps"
+        android:icon="@drawable/ic_airline_seat_legroom_reduced_white_24dp"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_total_amount"
         android:orderInCategory="100"
         android:title="@string/action_total_amount"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_knee_slaps"
-        android:title="@string/action_check_knee_slaps"
-        app:showAsAction="always" />
 </menu>

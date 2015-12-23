@@ -15,8 +15,6 @@ guarantees that will ever happen.
 
 TODO
 ====
-- Fix navigation among activities in action bar
-- Do not allow -1 knee slaps
 - Fix the screen when editing text during rotation
 - Add support for NFC sync
 - Add support for multiple pairings
