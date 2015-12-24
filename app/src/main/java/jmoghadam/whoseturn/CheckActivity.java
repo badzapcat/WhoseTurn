@@ -24,6 +24,8 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
 
     private static final String INPUT_ERROR_MESSAGE = "Please enter a number amount.";
     private static final String AMOUNT_1_OWES_2 = "amount1Owes2";
+    private static final String DELTA_SINCE_SYNC = "deltaSinceSync";
+    private static final String DELTA_MESSAGE = "Debt has changed by $%s since the last sync.";
     private static final String WHOSE_TURN_MESSAGE = "It's %s's turn to pay!";
     private static final String CONFIRM_MESSAGE = "%s paid $%s";
     private static final String TOTAL_AMOUNT_MESSAGE = "%s owes %s $%s";
@@ -61,9 +63,14 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
         } else if (id == R.id.action_sync) {
             Intent intent = new Intent(this, SyncActivity.class);
             startActivity(intent);
+            return true;
+        } else if (id == R.id.action_delta_since_sync) {
+            toastDelta();
+            return true;
         } else if (id == R.id.action_knee_slaps) {
             Intent intent = new Intent(this, KneeActivity.class);
             startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -83,6 +90,15 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
                             getPartnerName(1), MONEY_FORMAT.format(Math.abs(amount))),
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Pop a toast displaying change in the current debt since the last sync.
+     */
+    private void toastDelta() {
+        float delta = getPreferences(Context.MODE_PRIVATE).getFloat(DELTA_SINCE_SYNC, 0);
+            Toast.makeText(this, String.format(DELTA_MESSAGE, MONEY_FORMAT.format(Math.abs(delta))),
+                    Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -140,20 +156,23 @@ public class CheckActivity extends AppCompatActivity implements AddMoneyFragment
     }
 
     /**
-     * Commit a payment by a partner, which updates the current debt.
+     * Commit a payment by a partner, which updates the current debt. This is NOT called during a
+     * sync, so it also adds the amount to the delta since the last sync.
      * @param partnerNumber The number of the partner making the payment.
      * @param amount The amount by which the partner is paying.
      */
     private void savePayment(int partnerNumber, float amount) {
         SharedPreferences checkActivityPreferences = getPreferences(Context.MODE_PRIVATE);
         float amount1Owes2 = checkActivityPreferences.getFloat(AMOUNT_1_OWES_2, 0);
+        float delta = checkActivityPreferences.getFloat(DELTA_SINCE_SYNC, 0);
         if (partnerNumber == 1) {
-            amount1Owes2 -= amount;
-        } else if (partnerNumber == 2) {
-            amount1Owes2 += amount;
+            amount *= -1;
         }
+        amount1Owes2 += amount;
+        delta += amount;
         SharedPreferences.Editor editor = checkActivityPreferences.edit();
         editor.putFloat(AMOUNT_1_OWES_2, amount1Owes2);
+        editor.putFloat(DELTA_SINCE_SYNC, delta);
         editor.commit();
     }
 

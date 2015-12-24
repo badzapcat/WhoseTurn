@@ -15,4 +15,5 @@
     <string name="sync_later">Sync later</string>
     <string name="sync_info">Tap your phone to sync!</string>
     <string name="action_sync">Sync</string>
+    <string name="action_delta_sice_sync">Change since sync</string>
 </resources>

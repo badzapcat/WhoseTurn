@@ -15,6 +15,7 @@ guarantees that will ever happen.
 
 TODO
 ====
+- Rename "CheckActivity" etc to "WhoseTurnActivity"
 - Fix the screen when editing text during rotation
 - Add support for NFC sync
 - Add support for multiple pairings
