@@ -13,7 +13,7 @@
     <string name="knee_activity_name">Knee Slaps</string>
     <string name="sync_activity_name">Sync</string>
     <string name="sync_later">Sync later</string>
-    <string name="sync_info">Tap your phone to sync!</string>
+    <string name="sync_info">Tap phones to sync!</string>
     <string name="action_sync">Sync</string>
     <string name="action_delta_sice_sync">Change since sync</string>
 </resources>
